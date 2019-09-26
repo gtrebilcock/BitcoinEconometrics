@@ -1,0 +1,69 @@
+\documentclass[12pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=25mm]{geometry}
+\usepackage{hyperref}
+
+\setlength{\parskip}{0.5em}
+
+\title{ORIE 4741 Project Proposal}
+\author{Gavin Trebilcock, gt322/ Tianjiao Li, tl787/ Minghan Shi, ms3536}
+\date{September 2019}
+
+\begin{document}
+
+\maketitle
+
+% \begin{center}
+%     \url{https://issuu.com/elaineegogo/docs/predicting_bitcoin_price_using_line}
+% \end{center}
+
+The cryptocurrency bitcoin has posed great challenges and opportunities for  policymakers, economists, entrepreneurs and consumers since its introduction by Nakamoto\cite{dyhrberg2016hedging}. However, the price formation of bitcoin cannot be explained by standard economic theories, such as future cash-flows model, purchasing power parity, or uncovered interest rate parity, because several features of currency supply and demand, which usually form the basis of currency price, are absent on bitcoin markets\cite{ciaian2016economics}.
+
+We are interested in researching whether or not we can predict the price movement of bitcoin using other public available data. More specifically we are interested testing whether certain metrics which theoretically should be correlated with bitcoin price have any predictive power to determine the prediction of bitcoin prices in the future. To do this we are considering factors such as the following:
+
+1. Gold prices: Intuitively this represents an asset similar to bitcoin in a sense that both are used as a store of value. Similar to bitcoin, gold has a finite amount of supply, which provides some of sense of similarity in regards to the assets supply/demand dynamics.
+
+2. Inflation rate: Many investors look for alternative assets in the face of inflationary pressures. When investors look for a safe asset that cannot be tainted by political pressures, bitcoin represents a potential path to safety.
+
+3. GPU pricing: GPU pricing will be directly influential on the supply dynamics for bitcoin as GPU's are the primary source for mining by most enterprises.
+
+\bibliographystyle{unsrt}
+\bibliography{bibliography.bib}
+
+\clearpage
+
+\noindent \textbf{Data retrieval:}
+
+We will retrieve bitcoin pricing data from a database of bitcoin pricing recorded over the past seven years, found at:
+
+\begin{center}
+    \url{https://coinmarketcap.com/currencies/bitcoin/historical-data/}
+\end{center}
+
+We will get gold prices from
+
+\begin{center}
+    \url{https://goldprice.org}
+\end{center}
+
+which provides spot gold pricing back to the 1970's.
+
+Data for U.S. monthly inflation rate can be found 
+at:
+
+\begin{center}
+    \url{https://www.usinflationcalculator.com/inflation/historical-inflation-rates/}
+\end{center}
+
+\noindent This site provides data from 1914 to 2019.
+
+We will retrieve GPU pricing either through a personal computer parts website which tracks GPU pricing or through tracking a GPU producer's stock price. The personal computer parts GPU pricing tracker can be found at:
+
+\begin{center}
+    \url{https://pcpartpicker.com/trends/price/video-card/}
+\end{center}
+
+We can retrieve daily stock price data of a GPU producer, Nvidia (ticker NVDA) from Google finance. 
+
+\end{document}
