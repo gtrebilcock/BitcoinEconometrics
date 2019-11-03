@@ -1,4 +1,4 @@
-Date,^GSPC Adjusted close price,^GSPC Log Daily Returns,BTC Adjusted close price,BTC Log Daily Returns,NVDA Adjusted Close Price,NVDA Log Daily Returns,Gold Spot Adjusted Close Price,Gold Spot Log Daily Returns
+Date,^GSPC_adj_price,^GSPC_log_ret,BTC_adj_price,BTC_log_ret,NVDA_adj_price,NVDA_log_ret,Gold_adj_price,Gold_log_ret
 4/30/2013,"1,597.57",,139,,12.850796,,1469.31,
 5/1/2013,"1,582.70",-0.00935147258,116.99,-17.24%,12.738806,-0.008752829761,1473.18,0.002630426769
 5/2/2013,"1,597.59",0.00936400403,105.21,-10.61%,12.888124,0.01165334199,1455.11,-0.01234183047
