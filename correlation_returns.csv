@@ -1,0 +1,7 @@
+,BTC_log_ret,GSPC_log_ret,NVDA_log_ret,Gold_log_ret,US_inflation_rate,3_month_LIBOR
+BTC_log_ret,1,,,,,
+GSPC_log_ret,-0.002988951,1,,,,
+NVDA_log_ret,0.044254309,0.527982614,1,,,
+Gold_log_ret,0.038192112,-0.006213657,-0.027353496,1,,
+US_inflation_rate,-0.017404432,0.031904811,-0.067089776,-0.024185099,1,
+3_month_LIBOR,-0.011382159,-0.00658267,-0.038932961,0.030201228,0.037478074,1
