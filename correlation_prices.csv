@@ -1,7 +1,0 @@
-,BTC_adj_price,GSPC_adj_price,NVDA_adj_price,Gold_adj_price,US_inflation_rate,3_month_LIBOR
-BTC_adj_price,1,,,,,
-GSPC_adj_price,0.828798658,1,,,,
-NVDA_adj_price,0.834321446,0.913942252,1,,,
-Gold_adj_price,0.404818336,0.232818703,0.240791207,1,,
-US_inflation_rate,0.098761117,-0.038684189,0.125665488,0.212143873,1,
-3_month_LIBOR,0.773266913,0.925666702,0.90036913,0.289035222,0.037478074,1
