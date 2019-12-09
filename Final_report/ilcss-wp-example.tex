@@ -162,7 +162,7 @@ Volatility index       & VIX                  \\
 \end{tabular}
 \end{table}
 
-\section{Exploratory Data Analysis and The Simple Linear Regression}
+\section{Exploratory Data Analysis and The Simple OLS Linear Regression}
 After feature engineering, we first show the fluctuation of the data by visualizing the distribution of the daily returns (Figure \ref{hist_distribution}) generated in the previous section. We notice that the bitcoin price has the largest daily fluctuations compared to the feature variables. This indicates the bitcoin price forming is complicated and we do not have enough features to capture the bitcoin pricing at this point.
 
 \begin{figure*}[tbhp]
@@ -181,7 +181,7 @@ We also do a correlation analysis between the features, shown in Figure \ref{cor
 \label{corr}
 \end{figure}
 
-The data we have is a time series. Thus, the first 80\% of the data are put into $\mathcal{D}_{train}$ while the most recent 20\% of the data are put into $\mathcal{D}_{test}$. The simple linear regression with each of our explanatory variables described above is shown in Figure \ref{reg_no_trans}. It is obvious that this equation has little to no predictive power. We concluded that adding an auto-regressive term based on prior day bitcoin price as today's bitcoin price would be logically sound as tomorrow's bitcoin price will be dependent on today's price. The results from this linear regression are shown in Figure \ref{reg_yes_trans}.
+The data we have is a time series. Thus, the first 80\% of the data are put into $\mathcal{D}_{train}$ while the most recent 20\% of the data are put into $\mathcal{D}_{test}$. We fit a simple ordinary least squares (OLS) regression with each of our explanatory variables and the results are shown in Figure \ref{reg_no_trans}. It is obvious that this equation has little to no predictive power. We concluded that adding an auto-regressive term based on prior day bitcoin price as today's bitcoin price would be logically sound as tomorrow's bitcoin price will be dependent on today's price. The results from this OLS linear regression are shown in Figure \ref{reg_yes_trans}.
 
 \begin{figure}[h]
 \centering
@@ -197,13 +197,13 @@ The data we have is a time series. Thus, the first 80\% of the data are put into
 \label{reg_yes_trans}
 \end{figure}
 
-The simple linear regression fits a prediction line where approximately 50 percent of the data is above the line and the other 50 percent is below the line by definition of least squares. This means our prediction will be as good as a coin flip for points above the line as well as below the line.
+The simple linear regression fits a prediction line where approximately 50 percent of the data is above the line and the other 50 percent is below the line by definition of ordinary least squares. This means our prediction will be as good as a coin flip for points above the line as well as below the line.
 In order to adjust our confidence in predicting positive returns, we fit a quantile regression to our data. In Figure \ref{quantile_reg_price} we run a quantile regression at the fifth quantile. On average, this prediction will under-estimate future prices as 95\% of data will be above our prediction line. We find this classification useful as it could alert investors when asymmetric opportunities appear. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=.8\linewidth]{quantile_reg_price.png}
-\caption{Regression for bitcoin pricing at the fifth quantile.}
+\caption{Regression for bitcoin pricing at the 5th quantile.}
 \label{quantile_reg_price}
 \end{figure}
 
@@ -538,9 +538,12 @@ In conclusion, our models, are relatively simple and naive, mostly due to the la
 
 \subsection*{Weapons of Math Destruction (WMD) and Fairness}
 If our model predicted bitcoin returns with some probability reliably above 50 percent net of trading costs, our model would be considered by some observers as a weapon of math destruction.  We consider the three attributes of WMD's below.
+
 The outcome of our model is testable. This can be seen as our model will predict either a positive or negative return, which can be compared with the true value at the end of each trading day.
+
 Predictions by our model would influence bitcoin returns. To show this, we suppose that all humans are rational and that our model predicts a positive return. It follows that investors would increase demand to purchase bitcoin and sellers would decrease the supply of selling bitcoin as each would want to hold on to the bitcoin for the predicted positive return. By the law of supply and demand, the price of bitcoin would then rise completing the self fulfilling prophecy. Conversely, if our model predicted a negative return for bitcoin, investors would decrease their demand to purchase bitcoin while current holders would be more willing to sell their current bitcoin, which by the law of supply and demand would cause the price of bitcoin to decline. Thus again completing the self fulfilling prophecy.
 Our model would also have the potential for harmful impacts on users as our model will not predict with perfect certainty that returns will be positive or negative. Therefore it follows that investors could face short term losses in the case our model outputs a false positive prediction.
+
 We do not believe fairness is an important criterion to be considered when choosing a model for application.
 
 \subsection*{Summary}
