@@ -102,7 +102,7 @@ We retrieved daily bitcoin pricing (Figure \ref{BTC_GSPC_NVDA_Gold} (a)) from \u
 
 Our S\&P500 (Figure \ref{BTC_GSPC_NVDA_Gold} (b)) and Nvidia daily price data (Figure \ref{BTC_GSPC_NVDA_Gold} (c)) were extracted from Yahoo finance and are measured in USD. Yahoo finance offers adjusted close prices which adjust daily close prices for dividends and stock splits. This makes the calculation for daily returns much simpler. We note that daily data for these two assets are tracked on trading days, which specifically exclude weekends and holidays. This forced us to use approximately 253 data points per year rather than the expected 365. We pulled data only for the dates that aligned with these two assets, as there would be less sparse data to deal with. 
 
-Our daily spot gold pricing (Figure \ref{BTC_GSPC_NVDA_Gold} (d)) was taken from \url{https://perthmint.com/} which provides daily spot pricing for gold priced in United States dollars per ounce. 
+Our daily spot gold pricing (Figure \ref{BTC_GSPC_NVDA_Gold} (d)) was taken from \url{https://perthmint.com/} which provides daily spot pricing for gold priced in United States dollars (USD) per ounce. 
 
 \begin{figure*}
 \centering
@@ -212,7 +212,7 @@ At first glance it seems as though we have found a model that fits our data set 
 Thus, the problem could be a classification problem, and we can use logistic loss function to predict the sign of the return rate in a probabilistic manner. As long as the model is believed to have a more than $50\%$ accuracy, the model is nontrivial, in the long run. Also, as a classification problem, it is easier for us to analyze the generalization properties of the model quantitatively.
 
 \section{Exploration of Model Improvements}
-Our initial thoughts coming into this project was that there should not be an analysis that allows for prediction of bitcoin prices with a significant reliability, or else we would quit writing this paper and take the road to riches and fame. Thus we did not expect to find the statistically significant coefficients we had in our preliminary regressions analysis (Table \ref{BTC_Price_reg_analysis}). We also found relatively meaningful correlations between our explanatory variables and bitcoin price (Figure \ref{corr}).
+Our initial thoughts coming into this project was that there should not be an analysis that allows for prediction of bitcoin prices with a significant probability, or else we would quit writing this paper and take the road to riches and fame. Thus we did not expect to find the statistically significant coefficients in our preliminary regressions analysis (Table \ref{BTC_Price_reg_analysis}). We also found relatively meaningful correlations between our explanatory variables and bitcoin price (Figure \ref{corr}).
 
 \begin{table}[h]
 \centering
@@ -305,7 +305,7 @@ Critical Value(10\%) & -2.567973e+00  \\
 \end{tabular}
 \end{table}
 
-Following this, we used natural log of returns for all of our assets that were also measured in price including GSPC, NVDA, and gold pricing. We then re-ran our regression to predict the log returns of bitcoin as well as a correlation analysis among our transformed explanatory variables and found significantly different results as seen in Table \ref{BTC_log_return_reg_analysis}. 
+Following this, we used the logarithm of daily returns for all of our assets that were price measured which includes GSPC, NVDA, and gold. We then re-ran our regression to predict the transformed returns of bitcoin as well as a correlation analysis among our transformed explanatory variables and found significantly different results as seen in Table \ref{BTC_log_return_reg_analysis}. 
 
 \begin{table}[h]
 \centering
@@ -334,11 +334,11 @@ Observ. & 1617 \\
 \end{tabular}
 \end{table}
 
-While these results differ significantly than what was seen before, this matches our expectations that predicting future bitcoin prices could not be "this easy". Given that firms spend millions of dollars on research and trading each year, there was little believe amongst our group that something as simple as this regression could be of much value. Although many of these coefficients are no longer statistically significant from zero, we decided to keep them in the model as we believe each is justified by economic reason.
+While these results differ from what was seen before, this matches our expectations that predicting future bitcoin prices could not be "this easy". Given that firms spend millions of dollars on research and trading each year, there was little belief amongst our group that something as simple as this regression could be of much value. Although many of these coefficients are no longer statistically significant from zero, we decided to keep them in the model as we believe each is justified by economic reason.
 
 \section{Bitcoin Log Return and Problem Re-formalization}
 
-As discussed above, the daily log return is of great interest because it basically reflects the price variation during a short term and one can use it to predict his/her real-time gain when holding the bitcoin. Even the exact quantity of the return can be trivial: we can focus on its sign, say, if the bitcoin price increase or decrease the next day. But here, we will construct our method so that our model will not only consider the sign of the log return, but also take into consideration the magnitude of the log return.
+As discussed above, the daily log return is of great interest because it reflects the price variation during a short term and one can use it to predict his/her real-time gain when holding the bitcoin. Even the exact quantity of the return can be trivial: we can focus on its sign, say, if the bitcoin price increase or decrease the next day. But here, we will construct our method so that our model will not only consider the sign of the log return, but also take into consideration the magnitude of the log return.
 
 The distribution of the bitcoin log return is shown in Figure \ref{distribution_log_return}, together with its statistics. It is clear that the log return is sufficiently normally distributed. We thus classify the bitcoin log returns into four classes: large positive ($\geq \mu + \sigma$), positive ($\leq \mu + \sigma$ \&\& $\geq \mu$), negative ($\geq \mu - \sigma$ \&\& $\leq \mu$), large negative ($\leq \mu - \sigma$), i.e. class 0, 1, 2, 3 respectively. The percentages per class are shown in Table \ref{percent_per_class}.
 
@@ -380,7 +380,7 @@ Given training vectors $x_i \in \mathbb{R}^p$
 The decision function is:
 \[\operatorname{sgn}(\sum_{i=1}^n y_i \alpha_i K(x_i, x) + \rho)\]
 
-In this problem, we simply use lagged features introduced previously, with selection according to model performance. The $lag$ is set to be $1$, $2$, $3$, $4$, $5$ days, respectively. And we use the standard machine learning package scikit-learn to try to fit a multi-class classifier that can predict the bitcoin daily log return. The encoding scheme we are using is one-vs.-rest (OvR) via "sklearn.multiclass.OneVsRestClassifier". We also enable probability estimates for all of the following results. scikit-learn also provides other several kernel functions, such as radial basis function, linear, polynomial, sigmoid, etc.
+In this problem, we simply use lagged features introduced previously, with selection according to model performance. The $lag$ is set to be $1$, $2$, $3$, $4$, $5$ days, respectively. And we use the standard machine learning package scikit-learn to try to fit a multi-class classifier that can predict the bitcoin daily log return. The encoding scheme we are using is one-vs.-rest (OvR) via "sklearn.multiclass.OneVsRestClassifier". We also enable probability estimates for all of the following results. Scikit-learn also provides other several kernel functions, such as radial basis function, linear, polynomial, sigmoid, etc.
 
 We analyze the effectiveness of the model by calculating for the confusion matrix via "sklearn.metrics.confusion\_matrix". By definition a confusion matrix $C$ is such that $C_{i,j}$ is equal to the number of observations known to be in group $i$ but predicted to be in group $j$. Thus, an ideal confusion matrix is a diagonal matrix. We normalize the confusion matrix to $C_{i,j}^{n}$ by:
 \[ C_{i,j}^{n} = \frac{C_{i,j}}{\sum_{k=1}^{nc}C_{i,k}} \]
@@ -394,7 +394,7 @@ C_{i,j}^{n} = \mathbb{E}[P(y' \in class \: j \;|\; (y|x) \in class \: i)]
 In order for the model to be effective in the long run, we expect a more than $50\%$ accuracy for each of the classes. In fact, as a multi-class classifier, the baseline of the performance can be even lower than $50\%$.
 
 \subsection*{The radial basis function (RBF) kernel}
-We first use a radial basis function (RBF) kernel function as to save computational power. RBF basically calculates the local density of each class and use that to classify new points within the window. The normalized confusion matrix of the most promising RBF model for both training and testing are listed below:
+We first use a radial basis function (RBF) kernel function as to save computational power. RBF calculates the local density of each class and use that to classify new points within the window. The normalized confusion matrix of the most promising RBF model for both training and testing are listed below:
 
 \noindent  for $lag = 2$:
 \smallskip\\
@@ -413,9 +413,9 @@ Testing:
 
 The training process went smoothly. However, we end up with poor accuracy for class 0 and 3. Class 1 has $50\%$ accuracy, and class 2 shows the highest accuracy, $77\%$. In testing, we are having very poor predictive accuracy for class 0 and class 3. The accuracy for class 1 is just below $50\%$, while we have a over $50\%$ accuracy for class 2. \textbf{(This means our model for classifying class 2 is at least better than a random number generator)}. However, we don't have a significantly higher than $50\%$ test accuracy for class 2. So in real life, sadly, it is risky to apply this model to make any financial decisions.
 
-The reason why our model fails to classify class 0 and 3 could be the insufficient examples of class 0 and 3. We only have tens of such large bitcoin price fluctuation in history. So our model may not borrow too much predictive power from those examples.
+One reason why our model fails to classify class 0 and 3 accurately is the insufficient examples of class 0 and 3. We only have tens of such large bitcoin price fluctuation in history. So our model may not borrow too much predictive power from those examples.
 
-We also have tried adding/removing features in this case. We find that neither adding/removing variables will help improving the error. Adding $lag$ will instantly lower the training error but increase the test error, resulting in a typical over-fitting scenario. Decreasing $lag$ will instantly increase both the training and testing error, resulting in a under-fitting case. We can only hope that, at least for class 2, our model shows potential to generalize.
+We also have tried adding/removing features in this case. We find that neither adding/removing variables help improve error. Adding $lag$ will instantly lower the training error but increase the test error, resulting in a typical over-fitting scenario. Decreasing $lag$ will instantly increase both the training and testing error, resulting in a under-fitting case. We can only hope that, at least for class 2, our model shows potential to generalize.
 
 \subsection*{The polynomial kernel}
 We use the polynomial kernel implemented in scikit-learn package. The polynomial kernel function basically does a further feature transformation by converting the current features into higher-order polynomials. Finding the exact order of the polynomial is done by the hidden algorithms, yet the fitting is still done in a SVM manner. We present the best model we can fit with polynomial kernel as follows:
@@ -441,13 +441,13 @@ However, even we did everything to find the sweet point of generalization, there
 
 We have also tested the linear and sigmoid kernels, both of which are even worse than the two introduced above. Apparently most of the real world problems are non-linear, and the linear model cannot outperform the polynomial model on our data set. For the sigmoid kernel, the resulting confusion matrices are erroneously sparse: it classifies every point into class 2 or class 3. The analysis on those two kernels is beyond the scope of this report.
 
-From the confusion matrices, we see that the SVM method does not perform well on this data set. However, we can discuss the results in the following dimensions: \textbf{1.} The models all cannot predict neither class 0 or class 3 points very well, that is, the model cannot predict the extreme values. This is probably due the the lack of data examples. \textbf{2.} The RBF model seems to be useful for differentiating class 2 points from other classes while the polynomial model shows potential in classifying class 1 points from others. This is significant because this means the model is effective in predicting, at least partially, the bitcoin log return. \textbf{3.} Again, in fact, as a multi-class classifier, the baseline of the performance is even lower than $50\%$. We still stand a chance in effectively classify the target data point with the combination of models, i.e., combining the prediction of the RBF and the polynomial model to make a comprehensive prediction. \textbf{4.} We have gathered 10 variables, with $lag$'s, we have a large variety of choices of features to use. However, for different models, the feature may improve one while damage another. For example, smaller $lag$'s are appreciated in the RBF models, while larger $lag$'s can effectively improve the polynomial model. In reality, the market acts fast to some fluctuations, but some profound events will exert their impact gradually and slowly (e.g. The U.S.-China Trade War). Different models may have captured different aspects of the real world.
+From the confusion matrices, we see that the SVM method does not perform well on this data set. However, we can discuss the results in the following dimensions: \textbf{1.} None of the models predict class 0 or class 3 points very well, that is, the model cannot predict the extreme values. This is probably due the the lack of data examples. \textbf{2.} The RBF model seems to be useful for differentiating class 2 points from other classes while the polynomial model shows potential in classifying class 1 points from others. This is significant because this means the model is effective in predicting, at least partially, the bitcoin log return. \textbf{3.} Again, in fact, as a multi-class classifier, the baseline of the performance is even lower than $50\%$. We still stand a chance in effectively classify the target data point with the combination of models, i.e., combining the prediction of the RBF and the polynomial model to make a comprehensive prediction. \textbf{4.} We have gathered 10 variables, with $lag$'s, we have a large variety of choices of features to use. However, for different models, the feature may improve one while damaging another. For example, smaller $lag$'s are appreciated in the RBF models, while larger $lag$'s can effectively improve the polynomial model. In reality, the market acts fast to some fluctuations, but some profound events will exert their impact gradually and slowly (e.g. The U.S.-China Trade War). Different models may have captured different aspects of the real world.
 
 \section{Predicting Bitcoin Log Return via k-Nearest Neighbors (kNN)}
 
 We then try to implement the classification starting with non-parametric method.
 
-In kNN algorithm, the training examples are vector in a multidimensional feature space, each with a class label. In the classification process, we define $k$ to be the amount of neighbours we want check for distribution. Given an unlabeled vector, we take its nearest $k$ neighbours, where distance is using Euclidean distance or Hamming distance for discrete variables. The vector will be assigned using the weights of its neighbours labels.
+In the kNN algorithm, the training examples are represented as a vector in a multidimensional feature space, each with a class label. In the classification process, we define $k$ to be the amount of neighbours we want check for distribution. Given an unlabeled vector, we take its nearest $k$ neighbours, where distance is using Euclidean distance or Hamming distance for discrete variables. The vector will be assigned using the weights of its neighbours labels.
 
 For the $i$th nearest neighbour is assigned with weight $w_{i}$, with $\sum_{i=1}^n w_{i} = 1$. For query $x$, it is defined as follows \cite{samworth2012optimal}:
 \[
@@ -465,7 +465,7 @@ w_{i}=
 y_{pred} = \argmax_x\sum_{i \in T}\dot w_{i} \dot \delta(y=y_{i})
 }
 \]
-Since we find that the data points are normally distributed, as it shows in Figure \ref{distribution_log_return}. And for classification, as it shows in previous SVC models, we find our model not good at identifying the large positive ($\geq \mu + \sigma$) and large negative ($\leq \mu - \sigma$). Thus we change to encode the y value to have the four classes have the approximate amount of data points. The statistics of our data set is that we have $53.6\%$ positive y values, thus we labeled our data points by comparing to the median of the positive y values and the median of the negative y values. Based on this label method, we do the experiment to check the relationship between the number of neighbours for kNN algorithm and the test matrix accuracy both for uniformly weighted kNN and distance-based weighted kNN, as it shows in Figure \ref{kNN_trend}.
+Since we find that the data points are normally distributed, as it shows in Figure \ref{distribution_log_return}. And for classification, as it shows in previous SVC models, we find our model does not accurately identify large positive ($\geq \mu + \sigma$) and large negative ($\leq \mu - \sigma$). Thus we change to encode the y value to have the four classes have the approximate amount of data points. The statistics of our data set is that we have $53.6\%$ positive y values, thus we labeled our data points by comparing to the median of the positive y values and the median of the negative y values. Based on this label method, we do the experiment to check the relationship between the number of neighbours for kNN algorithm and the test matrix accuracy both for uniformly weighted kNN and distance-based weighted kNN, as shown in Figure \ref{kNN_trend}.
 
 \begin{figure}[h]
 \centering
@@ -474,14 +474,14 @@ Since we find that the data points are normally distributed, as it shows in Figu
 \label{kNN_trend}
 \end{figure}
 
-From Figure \ref{kNN_trend}, we observe that distance-based weighted kNN performs better than uniformly weighted kNN.  Comparing to uniformly weight method, which causes miss-classification after adding too many neighbours, the distance-based weighted kNN can decrease the overfitting on adding more neighbours to the checking set, which results in higher testing accuracy. 
+From Figure \ref{kNN_trend}, we observe that distance-based weighted kNN outperforms the uniformly weighted kNN.  Compared to uniformly weight method, which causes miss-classification after adding too many neighbours, the distance-based weighted kNN can decrease the overfitting by adding more neighbours to the checking set, which results in higher testing accuracy. 
 
 We use the kNN implemented in scikit-learn package. We present the best model we can fit using kNN classification method as follows:
 
 \noindent  for $lag = 3$:
 \smallskip\\
 Variables: \textit{GSPC\_log\_ret}, \textit{BTC\_log\_ret}, \textit{NVDA\_log\_ret}, \textit{Gold\_log\_ret}, \textit{US\_inflation\_rate}, \textit{3\_month\_LIBOR}. 6 variables, thus $6\times lag$ features.\\
-Parameters: \textit{n\_neightbours=64},\textit{weights='distance'}
+Parameters: \textit{n\_neighbours=64},\textit{weights='distance'}
 \smallskip\\
 Testing:
 
@@ -490,12 +490,12 @@ Testing:
 %\label{kNN_test}
 \end{center}
 
-From the confusion matrix, we observe that the heatmap of our confusion matrix is more diagonalized which means that the median labelling method helps to identify more data points in the budget. But the overall confusion matrix accuracy for kNN, which is 33.34\%, is lower than SVC model.
+From the confusion matrix, we observe that the heatmap of our confusion matrix is more diagonalized, which means that the median labelling method helps to identify more data points in the budget. But the overall confusion matrix accuracy for kNN, which is 33.34\%, is lower than SVC model.
 
 \section{Predicting Bitcoin Log Return via Random Forest (RF)}
 
-Then we consider Random Forest as another option to reduce over-fitting in this multi-class classification problem. Random forest is actually a meta estimator that apply decision trees classifiers on subset and use averaging to generate the final prediction. The training algorithm for random forests involves with the technique of bootstrap aggregating, or bagging.
-For bagging technique, given a training set $X = x_1,x_2,...,x_n$ with responses $Y = y_1,y_2,...,y_n$ bagging repeatedly selects a random sample with replacement of training set and fits trees to these samples \cite{lin2006random}.
+Then we consider Random Forest as another option to reduce over-fitting in this multi-class classification problem. Random forests are a meta estimator that apply decision trees classifiers on subset and use averaging to generate the final prediction. The training algorithm for random forests involves the technique of bootstrap aggregating, or bagging.
+For the bagging technique, given a training set $X = x_1,x_2,...,x_n$ with responses $Y = y_1,y_2,...,y_n$ bagging repeatedly selects a random sample with replacement of training set and fits trees to these samples \cite{lin2006random}.
 
 \hspace{2mm} For $b=1,2,...,B$
 
@@ -532,7 +532,7 @@ From the confusion matrix, we observe that our confusion matrix for our Random F
 --- How reliable is a Bitcoin price prediction? Yahoo Finance, Christina Comben and Coin Rivet. October 3, 2019
 \\[3pt]
 
-In real life, the financial market is dependent on too many variables to ensure reliable predictions. For bitcoin, political decisions and new crypto-products being launched to psychological factors – anything can impact the price of bitcoin. For example, Chinese regulatory authorities termed initial coin offerings (ICO), a cryptocurrency-based fundraising process, illegal in China September 2017. That ban triggered an instant 6\% decline in bitcoin prices. On the other hand, value of bitcoin raised by 26.5\% since President Trump announced he would raise tariffs on Chinese imports by May 17, 2019. There is no way we can capture such impact with our model. 
+In real life, the financial market is dependent on too many variables to ensure reliable predictions. For bitcoin, from political decisions and new crypto-products being launched to psychological factors – anything can impact the price of bitcoin. For example, Chinese regulatory authorities termed initial coin offerings (ICO), a cryptocurrency-based fundraising process, illegal in China September 2017. That ban triggered an instant 6\% decline in bitcoin prices. On the other hand, value of bitcoin raised by 26.5\% since President Trump announced he would raise tariffs on Chinese imports by May 17, 2019. There is no way we can capture such impact with our model. 
 
 In conclusion, our models, are relatively simple and naive, mostly due to the lack of accessible data and partially due to the model simplicity. We do not feel confident implementing any of these models in all scenarios. However, if we were to implement any of these models in production, we would consider the probabilistic approach utilizing a quantile regression to make short term speculation on data points that fall within our confidence interval.
 
